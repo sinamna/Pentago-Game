@@ -8,15 +8,21 @@ public class Player {
         this.board=mainBlock;
     }
     //handle turn method
-    public void playTurn(){
+    public boolean playTurn(){
         Scanner input=new Scanner(System.in);
         placeDisc();
+        if(board.checkEndOfGame()) return true;
         if(board.foundSymmetricalBlock()){
             System.out.println("Do you want to rotate block? press y for yes ");
-            if(input.next().charAt(0)=='y')
+            if(input.next().charAt(0)=='y') {
                 rotateBlock();
-        }else
+                if(board.checkEndOfGame()) return true;
+            }
+        }else {
             rotateBlock();
+            if(board.checkEndOfGame()) return true;
+        }
+        return false;
         //board.print();
     }
     //method for placing disc
@@ -32,7 +38,7 @@ public class Player {
                         board.placeDisc(playerId, x - 1, y - 1);
                         break;
                     }else
-                        System.out.println("Chosen spot isn't empty\n enter :");
+                        System.out.println("Chosen spot isn't empty\nenter another place :");
                 else
                     System.out.println("Your chosen spot is not in the map :/ \n choose correct one");
             }catch(Exception e){

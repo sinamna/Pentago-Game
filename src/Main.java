@@ -5,13 +5,21 @@ public class Main {
         Player playerOne=new Player(gameBoard,1);
         Player playerTwo=new Player(gameBoard,2);
         boolean turnChanger=true;
-        while(!gameBoard.checkEndOfGame()){
+        while(true){
             if(turnChanger){
-                playerOne.playTurn();
-                gameBoard.print();
-                turnChanger=false;
+                if(playerOne.playTurn()) {
+                    gameBoard.print();
+                    System.out.println("RED PLAYER WON");
+                    break;
+                }
+                    gameBoard.print();
+                    turnChanger=false;
             }else{
-                playerTwo.playTurn();
+                if(playerTwo.playTurn()){
+                    gameBoard.print();
+                    System.out.println("BLACK PLAYER WON");
+                    break;
+                }
                 gameBoard.print();
                 turnChanger=true;
             }
