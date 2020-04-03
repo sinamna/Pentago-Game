@@ -8,7 +8,6 @@ public class Board {
             blocks[i] = new Block();
 
     }
-
     //check winning situation
     public boolean checkEndOfGame() {
         Disc[][] discBoard = blockTable();
@@ -20,7 +19,7 @@ public class Board {
                 if (discBoard[j][i].getId() == 1) redCounter++;
                 else if (discBoard[j][i].getId() == 2) blackCounter++;
             }
-            if (redCounter == 5 || blackCounter == 5) {
+            if (redCounter >= 5 || blackCounter >= 5) {
                 for (int i = 0; i < 4; i++) {
                     if (discBoard[j][i].getId() == 1 && discBoard[j][i + 1].getId() == 2 && discBoard[j][i + 2].getId() == 1)
                         intrupted = true;
@@ -30,17 +29,19 @@ public class Board {
                 if (!intrupted)
                     return true;
             }
-
+            redCounter=0;
+            blackCounter=0;
         }
         redCounter = 0;
         blackCounter = 0;
+        intrupted=false;
         //checking vertical lines
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
                 if (discBoard[j][i].getId() == 1) redCounter++;
-                else if (discBoard[j][i].getId() == 2) blackCounter++;
+                if (discBoard[j][i].getId() == 2) blackCounter++;
             }
-            if (redCounter == 5 || blackCounter == 5) {
+            if (redCounter >= 5 || blackCounter >= 5) {
                 for (int j = 0; j < 4; j++) {
                     if (discBoard[j][i].getId() == 1 && discBoard[j + 1][i].getId() == 2 && discBoard[j + 2][i].getId() == 1)
                         intrupted = true;
@@ -50,6 +51,8 @@ public class Board {
                 if (!intrupted)
                     return true;
             }
+            redCounter=0;
+            blackCounter=0;
         }
         //checking X shaped lines
         //checking '\' shaped paths
@@ -75,15 +78,9 @@ public class Board {
             if (discBoard[j][i].getId() == 1) redCounter++;
             else if (discBoard[j][i].getId() == 2) blackCounter++;
         }
-        if (redCounter == 5 || blackCounter == 5) {
-            for (int j = 1, i = 0; j < 4; j++, i++) {
-                if (discBoard[j][i].getId() == 1 && discBoard[j + 1][i + 1].getId() == 2 && discBoard[j + 2][i + 2].getId() == 1)
-                    intrupted = true;
-                else if (discBoard[j][i].getId() == 2 && discBoard[j + 1][i + 1].getId() == 1 && discBoard[j + 2][i + 2].getId() == 2)
-                    intrupted = true;
-            }
-            if(!intrupted)return true;
-        }
+        if (redCounter == 5 || blackCounter == 5) return true;
+
+
         ////////////////////////////////////////////////////////////////////
         redCounter = 0;
         blackCounter = 0;
@@ -91,15 +88,7 @@ public class Board {
             if (discBoard[j][i].getId() == 1) redCounter++;
             else if (discBoard[j][i].getId() == 2) blackCounter++;
         }
-        if (redCounter == 5 || blackCounter == 5) {
-            for (int j = 0, i = 1; i < 4; j++, i++) {
-                if (discBoard[j][i].getId() == 1 && discBoard[j + 1][i + 1].getId() == 2 && discBoard[j + 2][i + 2].getId() == 1)
-                    intrupted = true;
-                else if (discBoard[j][i].getId() == 2 && discBoard[j + 1][i + 1].getId() == 1 && discBoard[j + 2][i + 2].getId() == 2)
-                    intrupted = true;
-            }
-            if(!intrupted)return true;
-        }
+        if (redCounter == 5 || blackCounter == 5) return true;
         ////////////////////////////////////////////////////////////////////
         redCounter=0;
         blackCounter=0;
@@ -123,15 +112,7 @@ public class Board {
             if (discBoard[j][i].getId() == 1) redCounter++;
             else if (discBoard[j][i].getId() == 2) blackCounter++;
         }
-        if(redCounter==5||blackCounter==5){
-            for(int i=1,j=5;i<4;i++,j--){
-                if (discBoard[j][i].getId() == 1 && discBoard[j - 1][i + 1].getId() == 2 && discBoard[j - 2][i + 2].getId() == 1)
-                    intrupted = true;
-                else if (discBoard[j][i].getId() == 2 && discBoard[j - 1][i + 1].getId() == 1 && discBoard[j - 2][i + 2].getId() == 2)
-                    intrupted = true;
-            }
-            if(!intrupted)return true;
-        }
+        if(redCounter==5||blackCounter==5)return true;
         ////////////////////////////////////////////////////////////////////
         redCounter=0;
         blackCounter=0;
@@ -139,16 +120,8 @@ public class Board {
             if (discBoard[j][i].getId() == 1) redCounter++;
             else if (discBoard[j][i].getId() == 2) blackCounter++;
         }
-        if(redCounter==5||blackCounter==5){
-            for(int i=0,j=4;j>=2;i++,j--) {
-                if (discBoard[j][i].getId() == 1 && discBoard[j - 1][i + 1].getId() == 2 && discBoard[j - 2][i + 2].getId() == 1)
-                    intrupted = true;
-                else if (discBoard[j][i].getId() == 2 && discBoard[j - 1][i + 1].getId() == 1 && discBoard[j - 2][i + 2].getId() == 2)
-                    intrupted = true;
-            }
-            if(!intrupted)return true;
-        }
-        ////////////////////////////////////////////////////////////////////
+        if(redCounter==5||blackCounter==5)return true;
+        ////////////////////////////////////////////////////////////////////*/
         return false;
     }
         //Rotate
@@ -241,7 +214,7 @@ public class Board {
                 else
                     System.out.println(" |\n");
             }
-            System.out.println("    --------------- ---------------");
+            System.out.println("    --------------- ---------------\n");
 
         }
 
@@ -286,9 +259,9 @@ public class Board {
          */
         public boolean foundSymmetricalBlock () {
             boolean foundBlock = false;
-            for (Block block : blocks)
-                if (block.symmetrical())
-                    foundBlock = true;
+            for(int i=0;i<4;i++)
+                if(blocks[i].symmetrical())
+                    foundBlock=true;
             return foundBlock;
         }
     }

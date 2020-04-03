@@ -53,15 +53,18 @@ public class Block {
     public boolean symmetrical(){
         Disc[][] cloneOne=this.cloneBlock();
         Disc[][] cloneTwo=this.cloneBlock();
+        rotateRight(cloneOne);
+        rotateLeft(cloneTwo);
         return blockEquality(cloneOne) && blockEquality(cloneTwo);
     }
     private boolean blockEquality(Disc[][] toCheck){
         boolean equality=true;
         for(int i=0;i<3;i++)
             for(int j=0;j<3;j++){
-                if(toCheck[i][j].getId()!=discBlock[i][j].getId())
+                if(toCheck[i][j].getId()!=discBlock[i][j].getId()){
                     equality=false;
-                break;
+                    break;
+                }
             }
         return equality;
     }

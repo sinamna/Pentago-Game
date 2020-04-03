@@ -8,15 +8,15 @@ public class Main {
         while(true){
             if(turnChanger){
                 if(playerOne.playTurn()) {
-                    gameBoard.print();
-                    System.out.println("RED PLAYER WON");
+                    ///gameBoard.print();
+                    System.out.println("WHITE PLAYER WON");
                     break;
                 }
                     gameBoard.print();
                     turnChanger=false;
             }else{
                 if(playerTwo.playTurn()){
-                    gameBoard.print();
+                    //gameBoard.print();
                     System.out.println("BLACK PLAYER WON");
                     break;
                 }
