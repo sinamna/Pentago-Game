@@ -12,16 +12,16 @@ public class Player {
         Scanner input=new Scanner(System.in);
         placeDisc();
         board.print();
-        if(board.checkEndOfGame()) return true;
+            if(board.checkEndOfGame()==playerId ||board.checkEndOfGame()==3) return true;
         if(board.foundSymmetricalBlock()){
-            System.out.println("Do you want to rotate block? press y for yes ");
+            System.out.println("You can skip rotating a block . press y if you want to rotate one. ");
             if(input.next().charAt(0)=='y') {
                 rotateBlock();
-                if(board.checkEndOfGame()) return true;
+                if(board.checkEndOfGame()==playerId||board.checkEndOfGame()==3) return true;
             }
         }else {
             rotateBlock();
-            if(board.checkEndOfGame()) return true;
+            if(board.checkEndOfGame()==playerId||board.checkEndOfGame()==3) return true;
         }
         return false;
         //board.print();

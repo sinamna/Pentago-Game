@@ -7,22 +7,21 @@ public class Main {
         boolean turnChanger=true;
         while(true){
             if(turnChanger){
-                if(playerOne.playTurn()) {
-                    ///gameBoard.print();
-                    System.out.println("WHITE PLAYER WON");
-                    break;
-                }
+                if(!playerOne.playTurn()) {
                     gameBoard.print();
                     turnChanger=false;
+                }else break;
+
             }else{
-                if(playerTwo.playTurn()){
-                    //gameBoard.print();
-                    System.out.println("BLACK PLAYER WON");
-                    break;
-                }
-                gameBoard.print();
-                turnChanger=true;
+                if(!playerTwo.playTurn()){
+                    gameBoard.print();
+                    turnChanger=true;
+                }else break;
             }
         }
+        gameBoard.print();
+        if(gameBoard.checkEndOfGame()==3) System.out.println("BOTH PLAYERS WON.");
+        else if(gameBoard.checkEndOfGame()==1) System.out.println("WHITE PLAYER WON");
+        else System.out.println("BLACK PLAYER WON");
     }
 }
