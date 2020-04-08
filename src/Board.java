@@ -2,15 +2,12 @@ public class Board {
     Block[] blocks;
 
     //constructor
-
     public Board() {
         blocks = new Block[4];
         for (int i = 0; i < 4; i++)
             blocks[i] = new Block();
-
     }
 
-    //check winning situation
 
     /**
      * this method checks all the lines and returns int value
@@ -18,136 +15,141 @@ public class Board {
      * black player win ,returns 3 if both player had the 5 discs in one line
      */
     public int checkEndOfGame() {
+        /*
+          * the logic of this method is that it checks all the vertical and horizontal and X shape lines and counts
+          * the number of red and yellow discs and if it found 5 disc in a row checks for any interruption between same player discs
+          * and if it was match to pattern returns the number of player who pattern matched for.
+         */
         Disc[][] discBoard = blockTable();
-        int whiteCounter = 0, blackCounter = 0;
-        boolean intrupted = false;
-        boolean whiteWon = false, blackWon = false;
+        int redCounter = 0, yellowCounter = 0;
+        boolean interrupted = false;
+        boolean redWon = false, yellowWon = false;
         //checking horizontal lines
         for (int j = 0; j < 6; j++) {
             for (int i = 0; i < 6; i++) {
-                if (discBoard[j][i].getId() == 1) whiteCounter++;
-                else if (discBoard[j][i].getId() == 2) blackCounter++;
+                if (discBoard[j][i].getId() == 1) redCounter++;
+                else if (discBoard[j][i].getId() == 2) yellowCounter++;
             }
-            if (whiteCounter >= 5 || blackCounter >= 5) {
+            if (redCounter >= 5 || yellowCounter >= 5) {
                 for (int i = 0; i < 4; i++) {
                     if (discBoard[j][i].getId() == 1 && discBoard[j][i + 1].getId() == 2 && discBoard[j][i + 2].getId() == 1)
-                        intrupted = true;
+                        interrupted = true;
                     else if (discBoard[j][i].getId() == 2 && discBoard[j][i + 1].getId() == 1 && discBoard[j][i + 2].getId() == 2)
-                        intrupted = true;
+                        interrupted = true;
                 }
-                if (!intrupted)
+                if (!interrupted)
                     {
-                        if (whiteCounter >= 5) whiteWon = true;
-                        else if(blackCounter>=5)blackWon=true;
+                        if (redCounter >= 5) redWon = true;
+                        else if(yellowCounter>=5)yellowWon=true;
                     }
             }
-            whiteCounter = 0;
-            blackCounter = 0;
+            redCounter = 0;
+            yellowCounter = 0;
         }
-        whiteCounter = 0;
-        blackCounter = 0;
-        intrupted = false;
+        redCounter = 0;
+        yellowCounter = 0;
+        interrupted = false;
         //checking vertical lines
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
-                if (discBoard[j][i].getId() == 1) whiteCounter++;
-                if (discBoard[j][i].getId() == 2) blackCounter++;
+                if (discBoard[j][i].getId() == 1) redCounter++;
+                if (discBoard[j][i].getId() == 2) yellowCounter++;
             }
-            if (whiteCounter >= 5 || blackCounter >= 5) {
+            if (redCounter >= 5 || yellowCounter >= 5) {
                 for (int j = 0; j < 4; j++) {
                     if (discBoard[j][i].getId() == 1 && discBoard[j + 1][i].getId() == 2 && discBoard[j + 2][i].getId() == 1)
-                        intrupted = true;
+                        interrupted = true;
                     else if (discBoard[j][i].getId() == 2 && discBoard[j + 1][i].getId() == 1 && discBoard[j + 2][i].getId() == 2)
-                        intrupted = true;
+                        interrupted = true;
                 }
-                if (!intrupted)
+                if (!interrupted)
                     {
-                        if (whiteCounter >= 5) whiteWon = true;
-                    else if(blackCounter>=5)blackWon=true;
+                        if (redCounter >= 5) redWon = true;
+                    else if(yellowCounter>=5)yellowWon=true;
                     }
             }
-            whiteCounter = 0;
-            blackCounter = 0;
+            redCounter = 0;
+            yellowCounter = 0;
         }
         //checking X shaped lines
         //checking '\' shaped paths
-        whiteCounter = 0;
-        blackCounter = 0;
+        redCounter = 0;
+        yellowCounter = 0;
         for (int i = 0, j = 0; i < 6; i++, j++) {
-            if (discBoard[j][i].getId() == 1) whiteCounter++;
-            else if (discBoard[j][i].getId() == 2) blackCounter++;
+            if (discBoard[j][i].getId() == 1) redCounter++;
+            else if (discBoard[j][i].getId() == 2) yellowCounter++;
         }
-        if (whiteCounter == 5 || blackCounter == 5) {
+        if (redCounter == 5 || yellowCounter == 5) {
             for (int j = 0, i = 0; i < 4; j++, i++) {
                 if (discBoard[j][i].getId() == 1 && discBoard[j + 1][i + 1].getId() == 2 && discBoard[j + 2][i + 2].getId() == 1)
-                    intrupted = true;
+                    interrupted = true;
                 else if (discBoard[j][i].getId() == 2 && discBoard[j + 1][i + 1].getId() == 1 && discBoard[j + 2][i + 2].getId() == 2)
-                    intrupted = true;
+                    interrupted = true;
             }
-            if (!intrupted) {
-                if (whiteCounter >= 5) whiteWon = true;
-                else if(blackCounter>=5)blackWon=true;
+            if (!interrupted) {
+                if (redCounter >= 5) redWon = true;
+                else if(yellowCounter>=5)yellowWon=true;
             }
         }
         ////////////////////////////////////////////////////////////////////
-        whiteCounter = 0;
-        blackCounter = 0;
+        redCounter = 0;
+        yellowCounter = 0;
         for (int i = 0, j = 1; j < 6; i++, j++) {
-            if (discBoard[j][i].getId() == 1) whiteCounter++;
-            else if (discBoard[j][i].getId() == 2) blackCounter++;
+            if (discBoard[j][i].getId() == 1) redCounter++;
+            else if (discBoard[j][i].getId() == 2) yellowCounter++;
         }
-        if (whiteCounter == 5) whiteWon=true ;
-        else if(blackCounter==5)blackWon=true;
+        if (redCounter == 5) redWon=true ;
+        else if(yellowCounter==5)yellowWon=true;
         ////////////////////////////////////////////////////////////////////
-        whiteCounter = 0;
-        blackCounter = 0;
+        redCounter = 0;
+        yellowCounter = 0;
         for (int i = 1, j = 0; i < 6; i++, j++) {
-            if (discBoard[j][i].getId() == 1) whiteCounter++;
-            else if (discBoard[j][i].getId() == 2) blackCounter++;
+            if (discBoard[j][i].getId() == 1) redCounter++;
+            else if (discBoard[j][i].getId() == 2) yellowCounter++;
         }
-        if (whiteCounter == 5) whiteWon=true ;
-        else if(blackCounter==5)blackWon=true;
+        if (redCounter == 5) redWon=true ;
+        else if(yellowCounter==5)yellowWon=true;
 
         ////////////////////////////////////////////////////////////////////
-        whiteCounter = 0;
-        blackCounter = 0;
+        redCounter = 0;
+        yellowCounter = 0;
         for (int i = 0, j = 5; i < 6; i++, j--) {
-            if (discBoard[j][i].getId() == 1) whiteCounter++;
-            else if (discBoard[j][i].getId() == 2) blackCounter++;
+            if (discBoard[j][i].getId() == 1) redCounter++;
+            else if (discBoard[j][i].getId() == 2) yellowCounter++;
         }
-        if (whiteCounter == 5 || blackCounter == 5) {
+        if (redCounter == 5 || yellowCounter == 5) {
             for (int i = 0, j = 5; i < 4; i++, j--) {
                 if (discBoard[j][i].getId() == 1 && discBoard[j - 1][i + 1].getId() == 2 && discBoard[j - 2][i + 2].getId() == 1)
-                    intrupted = true;
+                    interrupted = true;
                 else if (discBoard[j][i].getId() == 2 && discBoard[j - 1][i + 1].getId() == 1 && discBoard[j - 2][i + 2].getId() == 2)
-                    intrupted = true;
+                    interrupted = true;
             }
-            if (!intrupted)
+            if (!interrupted)
             {
-                if(whiteCounter>=5)whiteWon=true;
-                else if(blackCounter>=5)blackWon=true;
+                if(redCounter>=5)redWon=true;
+                else if(yellowCounter>=5)yellowWon=true;
             }
         }
         ///////////////////////////////////////////////////////////////////
-        whiteCounter = 0;
-        blackCounter = 0;
+        redCounter = 0;
+        yellowCounter = 0;
         for (int i = 1, j = 5; i < 6; i++, j--) {
-            if (discBoard[j][i].getId() == 1) whiteCounter++;
-            else if (discBoard[j][i].getId() == 2) blackCounter++;
+            if (discBoard[j][i].getId() == 1) redCounter++;
+            else if (discBoard[j][i].getId() == 2) yellowCounter++;
         }
-        if (whiteCounter == 5) whiteWon=true ;
-        else if(blackCounter==5)blackWon=true;
+        if (redCounter == 5) redWon=true ;
+        else if(yellowCounter==5)yellowWon=true;
         ////////////////////////////////////////////////////////////////////
-        whiteCounter = 0;
-        blackCounter = 0;
+        redCounter = 0;
+        yellowCounter = 0;
         for (int i = 0, j = 4; j >= 0; i++, j--) {
-            if (discBoard[j][i].getId() == 1) whiteCounter++;
-            else if (discBoard[j][i].getId() == 2) blackCounter++;
+            if (discBoard[j][i].getId() == 1) redCounter++;
+            else if (discBoard[j][i].getId() == 2) yellowCounter++;
         }
-        if (whiteCounter == 5) whiteWon=true ;
-        else if(blackCounter==5)blackWon=true;
+        if (redCounter == 5) redWon=true ;
+        else if(yellowCounter==5)yellowWon=true;
         ////////////////////////////////////////////////////////////////////*/
-        return whiteWon &&blackWon ? 3:whiteWon ? 1 :blackWon?2:0;
+        return redWon &&yellowWon ? 3:redWon ? 1 :yellowWon?2:0;
     }
     //Rotate
 
@@ -158,8 +160,6 @@ public class Board {
     public void rotateBlock(int blockNum, int direction) {
         blocks[blockNum].rotate(direction);
     }
-    //placeDisc % thing
-
     /**
      * this method finds the block based on coordinates and
      * execute its placeDisc method
@@ -177,8 +177,6 @@ public class Board {
             else blocks[1].placeDisc(id, x, y);
         }
     }
-    //print
-
     /**
      * prints whole board
      */
@@ -189,28 +187,27 @@ public class Board {
         System.out.println("---  ---  ---  ---   ---  ---  ---  -");
         System.out.println("        Block 1          Block 2       ");
         for(int j=0;j<6;j++){
-            System.out.printf("\u001B[0m %d |\u001B[100m",j+1);
+            System.out.printf(" %d |",j+1);
             for(int i=0;i<6;i++){
-                if(map[j][i].getId()==1) System.out.printf("  %c  ",'W');
-                else if(map[j][i].getId()==2) System.out.printf("  %c  ",'B');
+                if(map[j][i].getId()==1) System.out.printf("  \u001B[31m%c\u001B[0m  ",'\u25cf');
+                else if(map[j][i].getId()==2) System.out.printf("  \u001B[33m%c\u001B[0m  ",'\u25cf');
                 else System.out.printf("  %c  ",'.');
                 if(i==2)
-                    System.out.printf("\u001B[0m|\u001B[100m");
+                    System.out.printf("|");
                 if(i==5)
-                    System.out.printf("\u001B[0m|");
+                    System.out.printf("|");
             }
             System.out.println();
             if(j!=2&&j!=5)
-                System.out.println("   |\u001B[100m               \u001B[0m|\u001B[100m               \u001B[0m|");
+                System.out.println("   |               |               |");
             else{
                 if(j==5)
                     System.out.println("        Block 3          Block 4       ");
-                System.out.println("\u001B[0m    --------------- ----------------");
+                System.out.println("    --------------- ----------------");
             }
 
         }
     }
-
     /**
      * this method makes a 6*6 block using summing up all four blocks
      *
